@@ -1,0 +1,29 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "project": ["tsconfig.app.json", "tsconfig.scripts.json", "tsconfig.spec.json"],
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint", "simple-import-sort", "import", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:jest/recommended"
+    ],
+    "rules": {
+        "simple-import-sort/imports": "warn",
+        "simple-import-sort/exports": "warn",
+        "import/first": "warn",
+        "import/newline-after-import": "warn",
+        "import/no-duplicates": "warn",
+        "prettier/prettier": "warn",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off"      
+    },
+    "ignorePatterns": [
+        "dist", "coverage", "public-types"
+    ]
+}

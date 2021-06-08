@@ -1,0 +1,97 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Auth {
+    id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    localId      String?       @unique @db.Uuid
+    authLocal    AuthLocal?    @relation(fields: [localId], references: [id])
+    user         User?
+
+    @@map(name: "auth")
+}
+
+model AuthLocal {
+    id                     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    passwordHash           String  @db.VarChar
+    passwordChangeRequired Boolean?
+    passwordResetToken     String?  @db.VarChar
+    auth                   Auth?
+
+    @@map(name: "auth_local")
+}
+
+
+model Membership {
+    id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    createdAt DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt DateTime @default(now()) @db.Timestamptz(6)
+    version   Int      @default(1)
+    roleId    String?  @db.Uuid
+    userId    String?  @db.Uuid
+    role      Role?    @relation(fields: [roleId], references: [id])
+    user      User?    @relation(fields: [userId], references: [id])
+
+    @@map(name: "membership")
+}
+
+model Post {
+    id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    slug            String    @unique @db.VarChar
+    backgroundImage Json
+    headerImage     Json
+    previewImage    Json
+    heading         String    @db.VarChar
+    subHeading      String    @db.VarChar
+    body            String
+    published       Boolean   @default(false)
+    publishedDate   DateTime? @db.Timestamptz(6)
+    tags            String[]
+    userId          String?   @db.Uuid
+    createdAt       DateTime  @default(now()) @db.Timestamptz(6)
+    updatedAt       DateTime  @default(now()) @db.Timestamptz(6)
+    version         Int       @default(1)
+    user            User?     @relation(fields: [userId], references: [id])
+
+    @@index([userId])
+    @@map(name: "post")
+}
+
+model Role {
+    id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name        String       @unique @db.VarChar
+    createdAt   DateTime     @default(now()) @db.Timestamptz(6)
+    updatedAt   DateTime     @default(now()) @db.Timestamptz(6)
+    version     Int          @default(1)
+    memberships Membership[]
+    
+    @@map(name: "role")
+}
+
+model User {
+    id                     String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    firstName              String       @db.VarChar
+    lastName               String       @db.VarChar
+    email                  String?      @unique @db.VarChar
+    emailConfirmed         Boolean      @default(false)
+    invalidLoginAttempts   Int?
+    accountLocked          Boolean?
+    postMetaData           Json?
+    hasSocialAuth          Boolean      @default(false)
+    activeMembership       String?      @db.VarChar
+    emailConfirmationToken String?      @db.VarChar
+    createdAt              DateTime     @default(now()) @db.Timestamptz(6)
+    updatedAt              DateTime     @default(now()) @db.Timestamptz(6)
+    version                Int          @default(1)
+    authId                 String      @unique @db.Uuid
+    auth                   Auth        @relation(fields: [authId], references: [id])
+    memberships            Membership[]
+    posts                  Post[]
+    
+    @@map(name: "user")
+}

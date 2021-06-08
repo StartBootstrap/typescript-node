@@ -1,0 +1,18 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "types": ["jest", "node"],
+        "strictNullChecks": false
+    },
+    "files": [
+        "src/main.ts",
+        "jest.config.ts"
+    ],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules/**/*", "dist/**/*", "migrations/**/*", "src/lib/orm/entity/**/*",
+    ]
+}

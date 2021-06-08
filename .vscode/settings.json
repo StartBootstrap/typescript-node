@@ -1,0 +1,32 @@
+{
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.formatOnSave": true
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+    "editor.formatOnSave": false,
+    "eslint.format.enable": true,
+    "javascript.format.enable": true,
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+    "json.schemas": [
+        {
+            "fileMatch": ["cypress.json"],
+            "url": "https://on.cypress.io/cypress.schema.json"
+        },
+        {
+            "fileMatch": [".prettierrc.json"],
+            "url": "http://json.schemastore.org/prettierrc"
+        },
+        {
+            "fileMatch": ["tslint.json"],
+            "url": "http://json.schemastore.org/tslint"
+        }
+    ],
+    "scss.lint.duplicateProperties": "error",
+    "typescript.format.enable": true,
+}

@@ -1,0 +1,32 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "src",
+        "declaration": false,
+        "downlevelIteration": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "lib": ["ES2020", "DOM"],
+        "module": "ES2020",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "outDir": "dist",
+        "paths": {
+            "#app/*": ["app/*"],
+            "#features/*": ["features/*"],
+            "#lib/*": ["lib/*"],
+            "#public-types/*": ["public-types/*"],
+            "#mocks/*": ["testing/mocks/__mocks__/*"],
+            "#src/*": ["*"],
+            "#testing/*": ["testing/*"]
+        },
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES2020",
+        "typeRoots": ["node_modules/@types", "src/typings"]
+    }
+}

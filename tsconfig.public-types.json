@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "declaration": true,
+        "outDir": "public-types",
+    },
+    "include": [
+        "src/public-types/**/*"
+    ],
+    "exclude": [
+        "node_modules/**/*",
+        "dist/**/*",
+        "src/testing/**/*",
+        "src/**/*.test.ts",
+        "src/migrations/**/*"
+    ]
+}
