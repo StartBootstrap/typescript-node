@@ -1,6 +1,6 @@
 import { Auth, AuthLocal, Membership, Post, Prisma, Role, User } from '@prisma/client';
 
-import { CreateUserPayload, RoleName } from '#public-types/admin';
+import { CreateUserPayload, DeleteMultipleUsersPayload, RoleName } from '#public-types/admin';
 import { DecodedToken, RegisterPayload, UserForToken } from '#public-types/auth';
 
 type UserForAuth = Prisma.UserGetPayload<{
@@ -168,4 +168,8 @@ export class TestRegisterPayload implements RegisterPayload {
     lastName = 'LAST_NAME';
     email = 'EMAIL';
     password = 'PASSWORD';
+}
+
+export class TestDeleteMultipleUsersPayload implements DeleteMultipleUsersPayload {
+    userIDs = ['ID1', 'ID2', 'ID3'];
 }
