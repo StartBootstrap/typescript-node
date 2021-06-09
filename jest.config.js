@@ -39,5 +39,5 @@ export default {
     roots: ['<rootDir>/src', '<rootDir>/src/testing/mocks'],
     testEnvironment: 'node',
     transform: {},
-    transformIgnorePatterns: ['<rootDir>/node_modules/'],
+    // transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
