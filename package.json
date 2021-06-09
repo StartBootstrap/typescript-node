@@ -22,7 +22,8 @@
         "test": "npm run jest -- --coverage",
         "test:one": "npm run jest -t -- ",
         "ts-node": "export TS_NODE_PROJECT=tsconfig.scripts.json && node --es-module-specifier-resolution=node --loader ts-node/esm -r dotenv/config",
-        "jest": "node --experimental-vm-modules node_modules/.bin/jest"
+        "jest": "npm run jest:clear && node --experimental-vm-modules node_modules/.bin/jest",
+        "jest:clear": "node --experimental-vm-modules node_modules/.bin/jest --clearCache"
     },
     "devDependencies": {
         "@inip/static-server": "1.0.1",

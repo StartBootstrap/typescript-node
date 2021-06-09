@@ -7,6 +7,7 @@ export default {
         'src/testing/.*',
         'src/typings/.*',
         'src/data/.*',
+        'src/app/models/.*',
     ],
     coverageThreshold: {
         global: {
@@ -38,4 +39,5 @@ export default {
     roots: ['<rootDir>/src', '<rootDir>/src/testing/mocks'],
     testEnvironment: 'node',
     transform: {},
+    transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };

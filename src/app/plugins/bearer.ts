@@ -51,7 +51,7 @@ export const bearerHook: preHandlerHookHandler = async function (request): Promi
             where: { id: decodedToken.id },
         });
     } catch (error) {
-        throw request.generateError<AuthErrorCodes>(httpCodes.UNAUTHORIZED, 'NO_USER');
+        throw request.generateError<AuthErrorCodes>(httpCodes.UNAUTHORIZED, 'NO_USER', error);
     }
 
     request.user = user;

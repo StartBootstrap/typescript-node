@@ -49,10 +49,6 @@ export async function verifyMinRole(
     function _setCurrentRole() {
         const currentMembership = request.user.memberships[0];
 
-        if (!currentMembership) {
-            throw request.generateError<AuthErrorCodes>(httpCodes.UNAUTHORIZED, 'NO_MEMBERSHIP');
-        }
-
         const userRole: RoleName = currentMembership.role?.name as RoleName;
 
         if (!userRole) {

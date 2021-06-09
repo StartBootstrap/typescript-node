@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { mockSign, mockVerify } from '#mocks/jsonwebtoken';
 import { TestUser, TestUserForToken } from '#testing/objects';
 
@@ -35,6 +36,7 @@ describe('JWT', () => {
     });
     it('should handle possible null memberships', () => {
         const testUser = new TestUser();
+        // @ts-ignore
         delete testUser.memberships;
         const results = userForToken(testUser);
         expect(results).toBeDefined();
