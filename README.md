@@ -13,27 +13,13 @@ cp .env.sample .env
 
 - Be sure to add values for the strings starting with `CHANGE_ME__`
 
+- Execute `## Prisma ### Starting from scratch` below
+
+- If you hit issues with postgress relating to `uuid-ossp`, run this script: `npm run uuid:ossp`
+
 ## Prisma
 
 <https://www.prisma.io/docs/concepts>
-
-### Schema
-
-`prisma/schema.prisma`
-
-After making changes to schema, be sure to run:
-
-```bash
-npx prisma generate
-```
-
-This will update `node_modules/.prisma/client`
-
-### Data Studio
-
-```bash
-npx prisma studio
-```
 
 ### Starting from scratch
 
@@ -41,4 +27,10 @@ npx prisma studio
 rm -rf prisma/migrations/20* && npx prisma migrate dev --name init
 nr script -- scripts/prisma/seed-root.ts
 nr script -- scripts/prisma/seed-test.ts
+```
+
+### Data Studio
+
+```bash
+npx prisma studio
 ```

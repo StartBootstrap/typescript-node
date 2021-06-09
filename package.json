@@ -12,7 +12,6 @@
         "build:scripts": "tsc -p tsconfig.scripts.json && mv dist/src/* dist && rmdir dist/src",
         "clean": "rm -rf dist/*",
         "debug": "npm run clean && npm run build:scripts && export TS_NODE_PROJECT=tsconfig.scripts.json && node --es-module-specifier-resolution=node --loader ts-node/esm -r dotenv/config ./scripts/debug.ts",
-        "public-types:update": "scripts/update-public-types.sh",
         "script": "export TS_NODE_PROJECT=tsconfig.scripts.json && node --es-module-specifier-resolution=node --loader ts-node/esm -r dotenv/config",
         "serve:coverage": "static-server ./coverage/lcov-report 9754",
         "start": "npm run clean && npm run build:scripts && export TS_NODE_PROJECT=tsconfig.scripts.json && node --es-module-specifier-resolution=node --loader ts-node/esm -r dotenv/config ./scripts/start.ts",
@@ -23,7 +22,8 @@
         "test:one": "npm run jest -t -- ",
         "ts-node": "export TS_NODE_PROJECT=tsconfig.scripts.json && node --es-module-specifier-resolution=node --loader ts-node/esm -r dotenv/config",
         "jest": "npm run jest:clear && node --experimental-vm-modules node_modules/.bin/jest",
-        "jest:clear": "node --experimental-vm-modules node_modules/.bin/jest --clearCache"
+        "jest:clear": "node --experimental-vm-modules node_modules/.bin/jest --clearCache",
+        "uuid:ossp": "npm run ts-node scripts/prisma/uuid-ossp-extension.ts"
     },
     "devDependencies": {
         "@inip/static-server": "1.0.1",
