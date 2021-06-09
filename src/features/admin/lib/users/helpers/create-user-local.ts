@@ -2,14 +2,13 @@ import httpCodes from '@inip/http-codes';
 import bcrypt from 'bcrypt';
 import { FastifyRequest } from 'fastify';
 
+import { findUser } from '#features/admin/lib/users';
 import { UserForAuthentication, userForAuthenticationInclude } from '#features/admin/models';
 import config from '#lib/config';
 import prisma from '#lib/prisma';
 import { authRandomToken } from '#lib/utility';
 import { RoleName } from '#public-types/admin';
 import { RegisterErrorCodes, RegisterPayload } from '#public-types/auth';
-
-import { findUser } from './find-user';
 
 export const createUserLocal = async function (
     request: FastifyRequest,
@@ -24,7 +23,11 @@ export const createUserLocal = async function (
         });
     } catch (error) {
         if (error.message !== 'USER_NOT_FOUND') {
-            throw error;
+            throw request.generateError<string>(
+                httpCodes.INTERNAL_SERVER_ERROR,
+                `ERROR_FINDING_USER`,
+                error
+            );
         }
     }
 

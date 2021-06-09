@@ -1,6 +1,7 @@
 import httpCodes from '@inip/http-codes';
 import { FastifyRequest } from 'fastify';
 
+import { mockCreateUserLocal, mockToUserForResults } from '#mocks/#features/admin/lib/users';
 import {
     mockCode,
     mockFastifyInstanceParameter,
@@ -11,71 +12,39 @@ import {
     requestMockWithParams,
 } from '#mocks/fastify';
 import { CreateUserPayload } from '#public-types/admin';
-import { TestUser } from '#testing/objects';
+import { TestCreateUserPayload, TestUser } from '#testing/objects';
 
 import { handler, usersCreate } from './users-create';
 
 describe('UsersCreate', () => {
     beforeEach(() => {
-        // mockFindUsersFilter.mockReset();
-        // (
-        //     requestMockWithParams as FastifyRequest<{
-        //         Body: CreateUserPayload;
-        //     }>
-        // ).params = new TestOrgIDParam();
-        // (
-        //     requestMockWithParams as FastifyRequest<{
-        //         Body: CreateUserPayload;
-        //     }>
-        // ).body = new TestCreateUserPayload();
+        mockCreateUserLocal.mockReset();
+        mockToUserForResults.mockReset();
+        mockCode.mockReset();
+        (
+            requestMockWithParams as FastifyRequest<{
+                Body: CreateUserPayload;
+            }>
+        ).body = new TestCreateUserPayload();
     });
 
     it('should create the usersCreate route', async () => {
         usersCreate(mockFastifyInstanceParameter, {});
         expect(mockRoute).toHaveBeenCalled();
     });
-    // it('should create a user', async () => {
-    //     mockFindUsersFilter.mockImplementation(() => []);
-    //     const mockToResultsUser = jest.fn(() => {});
-    //     mockEMSave.mockImplementation(() => ({
-    //         ...new TestUser(),
-    //         toResultsUser: mockToResultsUser,
-    //     }));
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         requestMockWithParams as FastifyRequest<{
-    //             Params: OrgIDParam;
-    //             Body: CreateUserPayload;
-    //         }>,
-    //         mockReply as MockFastifyReply<{ Params: OrgIDParam; Body: CreateUserPayload }>
-    //     );
-    //     expect(mockCode).toHaveBeenCalledWith(201);
-    //     expect(mockToResultsUser).toHaveBeenCalled();
-    // });
-    // it('should create a user with no groups', async () => {
-    //     mockFindUsersFilter.mockImplementation(() => []);
-    //     const mockToResultsUser = jest.fn(() => {});
-    //     mockEMSave.mockImplementation(() => ({
-    //         ...new TestUser(),
-    //         toResultsUser: mockToResultsUser,
-    //     }));
-    //     delete (
-    //         requestMockWithParams as FastifyRequest<{
-    //             Params: OrgIDParam;
-    //             Body: CreateUserPayload;
-    //         }>
-    //     ).body.groups;
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         requestMockWithParams as FastifyRequest<{
-    //             Params: OrgIDParam;
-    //             Body: CreateUserPayload;
-    //         }>,
-    //         mockReply as MockFastifyReply<{ Params: OrgIDParam; Body: CreateUserPayload }>
-    //     );
-    //     expect(mockCode).toHaveBeenCalledWith(201);
-    //     expect(mockToResultsUser).toHaveBeenCalled();
-    // });
+    it('should call createUserLocal', async () => {
+        mockCreateUserLocal.mockImplementation(() => new TestUser());
+        await handler.call(
+            mockFastifyInstanceParameter,
+            requestMockWithParams as FastifyRequest<{
+                Body: CreateUserPayload;
+            }>,
+            mockReply as MockFastifyReply<{ Body: CreateUserPayload }>
+        );
+        expect(mockCode).toHaveBeenCalledWith(201);
+        expect(mockCreateUserLocal).toHaveBeenCalled();
+        expect(mockToUserForResults).toHaveBeenCalled();
+    });
     // it('should catch errors when trying to create user', async () => {
     //     mockFindUsersFilter.mockImplementation(() => []);
     //     const thrownError = new Error('TEST_ERROR');

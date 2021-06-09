@@ -2,7 +2,7 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "types": ["jest", "node"],
-        "strictNullChecks": false
+        "strictNullChecks": true
     },
     "files": [
         "src/main.ts",

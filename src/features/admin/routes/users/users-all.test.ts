@@ -1,5 +1,6 @@
 import { FastifyRequest } from 'fastify';
 
+import { mockAllUsers, mockToUserForResults } from '#mocks/#features/admin/lib/users';
 import {
     mockFastifyInstanceParameter,
     MockFastifyReply,
@@ -13,12 +14,8 @@ import { handler, usersAll } from './users-all';
 
 describe('UsersAll', () => {
     beforeEach(() => {
-        // mockFindUsersFilter.mockReset();
-        // (
-        //     requestMockWithParams as FastifyRequest<{
-        //         Params: OrgIDParam;
-        //     }>
-        // ).params = new TestOrgIDParam();
+        mockAllUsers.mockReset();
+        mockToUserForResults.mockReset();
     });
 
     it('should create the usersAll route', async () => {
@@ -26,18 +23,15 @@ describe('UsersAll', () => {
         expect(mockRoute).toHaveBeenCalled();
     });
 
-    // it('should get all users', async () => {
-    //     mockFindUsersFilter.mockImplementationOnce(() => [
-    //         new TestUser(),
-    //         new TestUser(),
-    //         new TestUser(),
-    //     ]);
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         requestMockWithParams as FastifyRequest<{ Params: OrgIDParam }>,
-    //         mockReply as MockFastifyReply<{ Params: OrgIDParam }>
-    //     );
-    //     expect(mockFindUsersFilter).toHaveBeenCalled();
-    //     expect((returnValue as []).length).toEqual(3);
-    // });
+    it('should get all users', async () => {
+        mockAllUsers.mockImplementationOnce(() => [new TestUser(), new TestUser(), new TestUser()]);
+        const returnValue = await handler.call(
+            mockFastifyInstanceParameter,
+            requestMockWithParams as FastifyRequest,
+            mockReply as MockFastifyReply
+        );
+        expect(mockAllUsers).toHaveBeenCalled();
+        expect(mockToUserForResults).toHaveBeenCalled();
+        expect((returnValue as []).length).toEqual(3);
+    });
 });

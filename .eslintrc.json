@@ -21,7 +21,9 @@
         "import/no-duplicates": "warn",
         "prettier/prettier": "warn",
         "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": "off"      
+        "@typescript-eslint/no-empty-function": "off",
+        "jest/no-try-expect": "off",
+        "jest/no-conditional-expect": "off"
     },
     "ignorePatterns": [
         "dist", "coverage", "public-types"

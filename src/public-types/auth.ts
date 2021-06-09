@@ -7,15 +7,18 @@ export interface LoginPayload {
     email: string;
     password: string;
 }
+
 export interface LoginResponse {
     token: string;
 }
+
 export declare type LoginErrorCodes =
     | 'EMAIL_NOT_FOUND'
     | 'INVALID_PASSWORD'
     | 'NO_LOCAL_ACCOUNT'
     | 'PASSWORD_CHANGE_REQUIRED'
     | 'ACCOUNT_LOCKED';
+
 export interface RegisterPayload {
     firstName: string;
     lastName: string;

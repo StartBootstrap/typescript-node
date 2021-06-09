@@ -1,5 +1,5 @@
 import { mockSign, mockVerify } from '#mocks/jsonwebtoken';
-import { TestMembership, TestUser, TestUserForToken } from '#testing/objects';
+import { TestUser, TestUserForToken } from '#testing/objects';
 
 import { generateTokenResponse, userForToken, validateToken } from './index';
 
@@ -39,11 +39,4 @@ describe('JWT', () => {
         const results = userForToken(testUser);
         expect(results).toBeDefined();
     });
-    // it('should handle possible null groups', () => {
-    //     const testUser = new TestUser();
-    //     const testMembership = new TestMembership();
-    //     testUser.memberships = [testMembership];
-    //     const results = userForToken(testUser);
-    //     expect(results).toBeDefined();
-    // });
 });

@@ -1,9 +1,9 @@
 import { Auth, AuthLocal, Membership, Post, Prisma, Role, User } from '@prisma/client';
 
-import { RoleName } from '#public-types/admin';
-import { DecodedToken, UserForToken } from '#public-types/auth';
+import { CreateUserPayload, RoleName } from '#public-types/admin';
+import { DecodedToken, RegisterPayload, UserForToken } from '#public-types/auth';
 
-type UserMembershipsPosts = Prisma.UserGetPayload<{
+type UserForAuth = Prisma.UserGetPayload<{
     select: {
         memberships: {
             select: {
@@ -19,24 +19,28 @@ type UserMembershipsPosts = Prisma.UserGetPayload<{
     };
 }>;
 
-type MembershipIdRole = Prisma.MembershipGetPayload<{
+type MembershipForAuth = Prisma.MembershipGetPayload<{
     select: {
         id: true;
-        role: true;
+        role: {
+            select: {
+                name: true;
+            };
+        };
     };
 }>;
 
-export class TestUser implements UserMembershipsPosts {
+export class TestUser implements User {
     id = '00000000-0000-0000-0000-0000testuser';
-    firstName = 'TEST_FIRST_NAME';
-    lastName = 'TEST_LAST_NAME';
-    email = 'TEST@TEST.COM';
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
+    email = 'EMAIL';
     emailConfirmed = false;
     invalidLoginAttempts: number | null = null;
     accountLocked: boolean | null = null;
     postMetaData = {};
     pendingOrganizationAccess = false;
-    activeMembership: string | null = null;
+    activeMembership = '00000000-0000-0000-0000-00testmember';
     emailConfirmationToken: string | null = null;
     createdAt = new Date();
     updatedAt = new Date();
@@ -44,6 +48,27 @@ export class TestUser implements UserMembershipsPosts {
     auth = new TestAuth();
     authId = '00000000-0000-0000-0000-0000testauth';
     memberships = [new TestMembership()];
+    posts: Post[] = [];
+}
+
+export class TestUserForAuth implements UserForAuth {
+    id = '00000000-0000-0000-0000-0000testuser';
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
+    email = 'EMAIL';
+    emailConfirmed = false;
+    invalidLoginAttempts: number | null = null;
+    accountLocked: boolean | null = null;
+    postMetaData = {};
+    pendingOrganizationAccess = false;
+    activeMembership = '00000000-0000-0000-0000-00testmember';
+    emailConfirmationToken: string | null = null;
+    createdAt = new Date();
+    updatedAt = new Date();
+    version = 0;
+    auth = new TestAuth();
+    authId = '00000000-0000-0000-0000-0000testauth';
+    memberships = [new TestMembershipForAuth()];
     posts: Post[] = [];
 }
 
@@ -63,26 +88,48 @@ export class TestAuthLocal implements AuthLocal {
     auth = {} as Auth;
 }
 
-export class TestMembership implements MembershipIdRole {
+export class TestMembershipForAuth implements MembershipForAuth {
     id = '00000000-0000-0000-0000-00testmember';
+    role = { name: RoleName.admin };
+}
+
+export class TestMembership implements Membership {
+    id = '00000000-0000-0000-0000-00testmember';
+    createdAt = new Date();
+    updatedAt = new Date();
+    version = 0;
+    user = <User>{};
+    userId = '00000000-0000-0000-0000-0000testuser';
     role = new TestRole();
+    roleId = '00000000-0000-0000-0000-0000testrole';
 }
 
 export class TestRole implements Role {
     id = '00000000-0000-0000-0000-0000testrole';
-    name = RoleName.admin;
+    name!: RoleName;
     createdAt = new Date();
     updatedAt = new Date();
     version = 0;
     memberships: Membership[] = [];
+    constructor(roleName = RoleName.editor) {
+        this.name = roleName;
+    }
 }
+
+export const TestAllRoles = [
+    new TestRole(RoleName.root),
+    new TestRole(RoleName.admin),
+    new TestRole(RoleName.editor),
+    new TestRole(RoleName.registered),
+    new TestRole(RoleName.guest),
+];
 
 export class TestDecodedToken implements DecodedToken {
     exp = 1;
     iat = 2;
     id = '00000000-0000-0000-0000-0000testuser';
-    firstName = 'TEST_FIRST_NAME';
-    lastName = 'TEST_LAST_NAME';
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
     email = 'EMAIL';
     emailConfirmed = false;
     activeMembership = '00000000-0000-0000-0000-00testmember';
@@ -95,8 +142,8 @@ export class TestDecodedToken implements DecodedToken {
 }
 export class TestUserForToken implements UserForToken {
     id = '00000000-0000-0000-0000-0000testuser';
-    firstName = 'TEST_FIRST_NAME';
-    lastName = 'TEST_LAST_NAME';
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
     email = 'EMAIL';
     emailConfirmed = false;
     activeMembership = '00000000-0000-0000-0000-00testmember';
@@ -106,4 +153,19 @@ export class TestUserForToken implements UserForToken {
             role: { name: RoleName.admin },
         },
     ];
+}
+
+export class TestCreateUserPayload implements CreateUserPayload {
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
+    email = 'EMAIL';
+    password = 'PASSWORD';
+    roleName = RoleName.editor;
+}
+
+export class TestRegisterPayload implements RegisterPayload {
+    firstName = 'FIRST_NAME';
+    lastName = 'LAST_NAME';
+    email = 'EMAIL';
+    password = 'PASSWORD';
 }

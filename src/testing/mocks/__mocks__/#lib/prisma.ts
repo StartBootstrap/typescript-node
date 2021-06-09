@@ -8,3 +8,7 @@ export const prismaMock = mockDeep<PrismaClient>();
 export const mockPrisma = jest.fn(() => prismaMock);
 
 export default mockPrisma;
+
+beforeEach(() => {
+    mockReset(prismaMock);
+});
