@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "84eda9a0-38c0-40dc-9795-ca58e27866ea",
+		"name": "typescript-node",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "_health",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/latest/auth/health",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"latest",
+								"auth",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"function jwt_decode(jwt) {",
+									"    var parts = jwt.split('.'); // header, payload, signature",
+									"    return JSON.parse(atob(parts[1]));",
+									"}",
+									"",
+									"var data = pm.response.json();",
+									"pm.environment.set('token', data.token);",
+									"",
+									"var decodedToken = jwt_decode(data.token);",
+									"",
+									"console.log(decodedToken);",
+									"",
+									"// pm.globals.set(\"orgUUID\", decodedToken.memberships[0].organization.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{testEmail}}\",\n    \"password\": \"{{testPassword}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/latest/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"latest",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\": \"test@test.test\",\n    \"password\": \"123123123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/latest/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"latest",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "users-all",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.globals.set(\"productUUID\", data.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Testy\",\n    \"lastName\": \"McTestface\",\n    \"email\": \"testy@test.test\",\n    \"password\": \"123123123\",\n    \"roleName\": \"editor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-read",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/{{userUUID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"{{userUUID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-read-multiple",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userIDs\": [\n\t\t{{userUUIDs}}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/read-multiple",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"read-multiple"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Lance\",\n    \"lastName\": \"Manion\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/{{userUUID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"{{userUUID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/{{userUUID}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"{{userUUID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-delete-multiple",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userIDs\": [\n\t\t{{userUUIDs}}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/delete-multiple",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"delete-multiple"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users-find",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"/* Typical body for cursor",
+											"{",
+											"    \"where\": {",
+											"        \"email\": {",
+											"            \"contains\": \"cheers.test\"",
+											"        }",
+											"    },",
+											"    \"orderBy\": [",
+											"        {",
+											"            \"lastName\": \"asc\"",
+											"        }",
+											"    ],",
+											"    \"skip\": 5,",
+											"    \"take\": 5,",
+											"    \"skip\": 1,",
+											"    \"cursor\": {",
+											"        \"id\": \"f4dc5b37-02c3-4681-9d2a-19845d6ff686\"",
+											"    },",
+											"}",
+											"// Can use Offset, or Cursor based pagination",
+											"// https://www.prisma.io/docs/concepts/components/prisma-client/pagination",
+											"*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"where\": {\n        \"email\": {\n            \"contains\": \"cheers.test\"\n        }\n    },\n    \"orderBy\": [\n        {\n            \"lastName\": \"asc\"\n        }\n    ],\n    \"skip\": 5,\n    \"take\": 5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/find",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"find"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "_health",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/latest/admin/users/health",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"latest",
+										"admin",
+										"users",
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "_health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/latest/health",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"latest",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
