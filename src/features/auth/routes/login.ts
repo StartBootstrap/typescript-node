@@ -8,7 +8,6 @@ import {
     findUser,
     increaseInvalidLoginAttempt,
 } from '#features/admin/methods/users';
-import { UserForAuthentication } from '#features/admin/models';
 import { generateTokenResponse } from '#lib/jwt';
 import { RoleName } from '#public-types/admin';
 import { LoginErrorCodes, LoginPayload, LoginResponse } from '#public-types/auth';
@@ -31,18 +30,9 @@ export const handler: RouteHandlerMethodForConfig<{ Body: LoginPayload }> = asyn
 ): Promise<LoginResponse> {
     const loginPayload: LoginPayload = request.body;
 
-    let foundUser: UserForAuthentication;
-    try {
-        foundUser = await findUser(request, {
-            where: { email: loginPayload.email.toLowerCase() },
-        });
-    } catch (error) {
-        throw request.generateError<LoginErrorCodes>(
-            httpCodes.UNAUTHORIZED,
-            'EMAIL_NOT_FOUND',
-            error
-        );
-    }
+    const foundUser = await findUser(request, {
+        where: { email: loginPayload.email.toLowerCase() },
+    });
 
     if (foundUser.accountLocked) {
         throw request.generateError<LoginErrorCodes>(httpCodes.UNAUTHORIZED, 'ACCOUNT_LOCKED');

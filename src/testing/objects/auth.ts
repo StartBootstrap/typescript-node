@@ -7,7 +7,7 @@ import {
     RoleName,
     UpdateUserPayload,
 } from '#public-types/admin';
-import { DecodedToken, RegisterPayload, UserForToken } from '#public-types/auth';
+import { DecodedToken, LoginPayload, RegisterPayload, UserForToken } from '#public-types/auth';
 
 type UserForAuth = Prisma.UserGetPayload<{
     select: {
@@ -180,6 +180,11 @@ export class TestUpdateUserPayload implements UpdateUserPayload {
 export class TestRegisterPayload implements RegisterPayload {
     firstName = 'FIRST_NAME';
     lastName = 'LAST_NAME';
+    email = 'EMAIL';
+    password = 'PASSWORD';
+}
+
+export class TestLoginPayload implements LoginPayload {
     email = 'EMAIL';
     password = 'PASSWORD';
 }

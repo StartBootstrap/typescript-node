@@ -6,7 +6,7 @@ import { AllUsersErrorCodes } from '#features/admin/models';
 import prisma from '#lib/prisma';
 
 export const allUsers = async function (request: FastifyRequest): Promise<User[]> {
-    let foundUsers: User[] | undefined;
+    let foundUsers: User[];
 
     try {
         foundUsers = await prisma().user.findMany();
@@ -18,7 +18,7 @@ export const allUsers = async function (request: FastifyRequest): Promise<User[]
         );
     }
 
-    if (!foundUsers) {
+    if (foundUsers.length === 0) {
         throw request.generateError<AllUsersErrorCodes>(httpCodes.NOT_FOUND, 'USERS_NOT_FOUND');
     }
 

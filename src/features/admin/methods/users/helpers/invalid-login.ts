@@ -1,9 +1,8 @@
 import { FastifyRequest } from 'fastify';
 
+import { saveUser } from '#features/admin/methods/users';
 import { UserForAuthentication } from '#features/admin/models';
 import config from '#lib/config';
-
-import { saveUser } from './save-user';
 
 export const increaseInvalidLoginAttempt = async function (
     request: FastifyRequest,
