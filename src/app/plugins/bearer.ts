@@ -2,7 +2,7 @@ import httpCodes from '@inip/http-codes';
 import { FastifyPluginAsync, preHandlerHookHandler } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 
-import { findUser } from '#features/admin/lib/users';
+import { findUser } from '#features/admin/methods/users';
 import { UserForAuthentication } from '#features/admin/models';
 import { AuthErrorCodes } from '#features/auth/models';
 import { validateToken } from '#lib/jwt';

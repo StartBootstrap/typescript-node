@@ -1,7 +1,7 @@
 import { FastifyPluginAsync, RouteHandlerMethod } from 'fastify';
 
 import { RouteAuthConfig } from '#app/models';
-import { allUsers, toUserForResults } from '#features/admin/lib/users';
+import { allUsers, toUserForResults } from '#features/admin/methods/users';
 import { RoleName, UserForResults } from '#public-types/admin';
 
 import * as schemas from './_schemas';

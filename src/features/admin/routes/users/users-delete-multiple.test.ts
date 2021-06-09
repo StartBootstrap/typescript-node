@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FastifyRequest } from 'fastify';
 
-import { mockDeleteAuths, mockDeleteAuthsLocals } from '#mocks/#features/admin/lib/auth';
-import { mockDeleteUsers, mockFindUsers } from '#mocks/#features/admin/lib/users';
+import { mockDeleteAuths, mockDeleteAuthsLocals } from '#mocks/#features/admin/methods/auth';
+import { mockDeleteUsers, mockFindUsers } from '#mocks/#features/admin/methods/users';
 import {
     mockCode,
     mockFastifyInstanceParameter,
     MockFastifyReply,
-    mockGenerateError,
     mockReply,
     mockRoute,
     requestMockWithParams,
@@ -19,7 +18,6 @@ import { handler, usersDeleteMultiple } from './users-delete-multiple';
 
 describe('UsersDeleteMultiple', () => {
     beforeEach(() => {
-        mockGenerateError.mockReset();
         mockFindUsers.mockReset();
         mockDeleteUsers.mockReset();
         (

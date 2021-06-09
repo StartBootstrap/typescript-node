@@ -2,7 +2,7 @@ import httpCodes from '@inip/http-codes';
 import bcrypt from 'bcrypt';
 import { FastifyRequest } from 'fastify';
 
-import { findUser } from '#features/admin/lib/users';
+import { findUser } from '#features/admin/methods/users';
 import { UserForAuthentication, userForAuthenticationInclude } from '#features/admin/models';
 import config from '#lib/config';
 import prisma from '#lib/prisma';

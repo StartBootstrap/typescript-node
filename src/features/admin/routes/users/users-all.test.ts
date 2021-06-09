@@ -1,6 +1,6 @@
 import { FastifyRequest } from 'fastify';
 
-import { mockAllUsers, mockToUserForResults } from '#mocks/#features/admin/lib/users';
+import { mockAllUsers, mockToUserForResults } from '#mocks/#features/admin/methods/users';
 import {
     mockFastifyInstanceParameter,
     MockFastifyReply,

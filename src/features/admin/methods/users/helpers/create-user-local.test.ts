@@ -1,15 +1,12 @@
 import httpCodes from '@inip/http-codes';
 import { FastifyRequest } from 'fastify';
 
-import { mockFindUser } from '#mocks/#features/admin/lib/users';
+import { mockFindUser } from '#mocks/#features/admin/methods/users';
 import { prismaMock } from '#mocks/#lib/prisma';
 import {
     mockCode,
     mockFastifyInstanceParameter,
-    MockFastifyReply,
     mockGenerateError,
-    mockReply,
-    mockRoute,
     requestMockWithParams,
 } from '#mocks/fastify';
 import { RoleName } from '#public-types/admin';

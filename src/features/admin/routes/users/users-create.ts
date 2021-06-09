@@ -3,7 +3,7 @@ import { FastifyPluginAsync } from 'fastify';
 
 // import { Auth, AuthLocal, Group, Membership, User } from '#lib/orm/entity';
 import { RouteAuthConfig } from '#app/models';
-import { createUserLocal, toUserForResults } from '#features/admin/lib/users';
+import { createUserLocal, toUserForResults } from '#features/admin/methods/users';
 import { CreateUserPayload, RoleName, UserForResults } from '#public-types/admin';
 import { RouteHandlerMethodForConfig } from '#src/augmentations/fastify';
 

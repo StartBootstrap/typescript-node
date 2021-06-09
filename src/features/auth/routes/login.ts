@@ -7,7 +7,7 @@ import {
     clearInvalidLoginAttempt,
     findUser,
     increaseInvalidLoginAttempt,
-} from '#features/admin/lib/users';
+} from '#features/admin/methods/users';
 import { UserForAuthentication } from '#features/admin/models';
 import { generateTokenResponse } from '#lib/jwt';
 import { RoleName } from '#public-types/admin';

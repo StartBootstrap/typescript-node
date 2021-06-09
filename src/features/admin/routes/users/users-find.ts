@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client';
 import { FastifyPluginAsync } from 'fastify';
 
 import { RouteAuthConfig } from '#app/models';
-import { findUsers, toUserForResults } from '#features/admin/lib/users';
+import { findUsers, toUserForResults } from '#features/admin/methods/users';
 import { RoleName, UserForResults } from '#public-types/admin';
 import { RouteHandlerMethodForConfig } from '#src/augmentations/fastify';
 

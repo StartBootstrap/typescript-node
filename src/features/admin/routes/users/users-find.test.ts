@@ -1,13 +1,12 @@
 import { Prisma } from '@prisma/client';
 import { FastifyRequest } from 'fastify';
 
+import { mockFindUsers } from '#mocks/#features/admin/methods/users';
 import {
     mockFastifyInstanceParameter,
     MockFastifyReply,
-    mockGenerateError,
     mockReply,
     mockRoute,
-    requestMock,
     requestMockWithParams,
 } from '#mocks/fastify';
 import { TestUser } from '#testing/objects';
@@ -16,52 +15,32 @@ import { handler, usersFind } from './users-find';
 
 describe('UsersFind', () => {
     beforeEach(() => {
-        // mockFindUsersFilter.mockReset();
-        mockGenerateError.mockReset();
-        // (
-        //     requestMockWithParams as FastifyRequest<{
-        //         Body: Prisma.UserFindManyArgs;
-        //     }>
-        // ).body = new TestFindUsersPayload();
+        mockFindUsers.mockReset();
+        (
+            requestMockWithParams as FastifyRequest<{
+                Body: Prisma.UserFindManyArgs;
+            }>
+        ).body = {};
     });
 
     it('should create the usersFind route', async () => {
         usersFind(mockFastifyInstanceParameter, {});
         expect(mockRoute).toHaveBeenCalled();
     });
-    // it('should return the user', async () => {
-    //     mockFindUsersFilter.mockImplementationOnce(() => [
-    //         new TestUser(),
-    //         new TestUser(),
-    //         new TestUser(),
-    //     ]);
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         requestMockWithParams as FastifyRequest<{
-    //             Params: OrgIDParam;
-    //             Body: FindUsersPayload;
-    //         }>,
-    //         mockReply as MockFastifyReply<{ Params: OrgIDParam; Body: FindUsersPayload }>
-    //     );
-    //     expect(mockFindUsersFilter).toHaveBeenCalled();
-    //     expect((returnValue as []).length).toEqual(3);
-    // });
-    // it('should add organizationId to any where queries', async () => {
-    //     mockFindUsersFilter.mockImplementationOnce(() => [new TestUser()]);
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         {
-    //             ...(requestMockWithParams as FastifyRequest<{
-    //                 Params: OrgIDParam;
-    //                 Body: FindUsersPayload;
-    //             }>),
-    //             body: {
-    //                 where: [{ a: 1 }],
-    //             },
-    //         },
-    //         mockReply as MockFastifyReply<{ Params: OrgIDParam; Body: FindUsersPayload }>
-    //     );
-    //     expect(mockFindUsersFilter).toHaveBeenCalled();
-    //     expect((returnValue as []).length).toEqual(1);
-    // });
+    it('should return the user', async () => {
+        mockFindUsers.mockImplementationOnce(() => [
+            new TestUser(),
+            new TestUser(),
+            new TestUser(),
+        ]);
+        const returnValue = await handler.call(
+            mockFastifyInstanceParameter,
+            requestMockWithParams as FastifyRequest<{
+                Body: Prisma.UserFindManyArgs;
+            }>,
+            mockReply as MockFastifyReply<{ Body: Prisma.UserFindManyArgs }>
+        );
+        expect(mockFindUsers).toHaveBeenCalled();
+        expect((returnValue as []).length).toEqual(3);
+    });
 });

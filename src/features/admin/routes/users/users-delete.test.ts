@@ -1,62 +1,61 @@
-import httpCodes from '@inip/http-codes';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FastifyRequest } from 'fastify';
 
+import { mockDeleteAuths, mockDeleteAuthsLocals } from '#mocks/#features/admin/methods/auth';
+import { mockDeleteUsers, mockFindUser } from '#mocks/#features/admin/methods/users';
 import {
     mockCode,
     mockFastifyInstanceParameter,
     MockFastifyReply,
-    mockGenerateError,
     mockReply,
     mockRoute,
     requestMockWithParams,
 } from '#mocks/fastify';
-import { DeleteMultipleUsersPayload } from '#public-types/admin';
-import { TestUser } from '#testing/objects';
+import { IDParam } from '#public-types/global';
+import { TestIDParam, TestUser } from '#testing/objects';
 
 import { handler, usersDelete } from './users-delete';
 
 describe('UsersDelete', () => {
     beforeEach(() => {
-        // mockGenerateError.mockReset();
-        // (
-        //     requestMockWithParams as FastifyRequest<{
-        //         Body: DeleteMultipleUsersPayload;
-        //     }>
-        // ).params = new TestIDAndOrgIDParams();
+        mockFindUser.mockReset();
+        mockDeleteUsers.mockReset();
+        (requestMockWithParams as FastifyRequest<{ Params: IDParam }>).params = new TestIDParam();
     });
 
     it('should create the usersDelete route', async () => {
         usersDelete(mockFastifyInstanceParameter, {});
         expect(mockRoute).toHaveBeenCalled();
     });
-    // it('should delete the user', async () => {
-    //     mockFindUser.mockImplementation(() => new TestUser());
-    //     const returnValue = await handler.call(
-    //         mockFastifyInstanceParameter,
-    //         requestMockWithParams as FastifyRequest<{ Params: IDAndOrgIDParams }>,
-    //         mockReply as MockFastifyReply<{ Params: IDAndOrgIDParams }>
-    //     );
-    //     expect(mockFindUser).toHaveBeenCalled();
-    //     expect(mockCode).toHaveBeenCalledWith(204);
-    // });
-    // it('should catch errors when trying to remove user', async () => {
-    //     const thrownError = new Error('TEST_ERROR');
-    //     mockFindUser.mockImplementation(() => new TestUser());
-    //     mockEMRemove.mockImplementation(() => {
-    //         throw thrownError;
-    //     });
-    //     try {
-    //         const returnValue = await handler.call(
-    //             mockFastifyInstanceParameter,
-    //             requestMockWithParams as FastifyRequest<{ Params: IDAndOrgIDParams }>,
-    //             mockReply as MockFastifyReply<{ Params: IDAndOrgIDParams }>
-    //         );
-    //     } catch (error) {
-    //         expect(mockGenerateError).toHaveBeenLastCalledWith(
-    //             httpCodes.INTERNAL_SERVER_ERROR,
-    //             'ERROR_DELETING_USER',
-    //             thrownError
-    //         );
-    //     }
-    // });
+    it('should delete the user', async () => {
+        mockFindUser.mockImplementation(() => new TestUser());
+        await handler.call(
+            mockFastifyInstanceParameter,
+            requestMockWithParams as FastifyRequest<{ Params: IDParam }>,
+            mockReply as MockFastifyReply<{ Params: IDParam }>
+        );
+        expect(mockFindUser).toHaveBeenCalled();
+        expect(mockDeleteUsers).toHaveBeenCalled();
+        expect(mockDeleteAuths).toHaveBeenCalled();
+        expect(mockDeleteAuthsLocals).toHaveBeenCalled();
+        expect(mockCode).toHaveBeenCalledWith(204);
+    });
+    it('should not deleteAuths if they do not exist', async () => {
+        const testUser = new TestUser();
+        // @ts-ignore
+        delete testUser.authId;
+        // @ts-ignore
+        delete testUser.auth.localId;
+        mockFindUser.mockImplementation(() => testUser);
+        await handler.call(
+            mockFastifyInstanceParameter,
+            requestMockWithParams as FastifyRequest<{ Params: IDParam }>,
+            mockReply as MockFastifyReply<{ Params: IDParam }>
+        );
+        expect(mockFindUser).toHaveBeenCalled();
+        expect(mockDeleteUsers).toHaveBeenCalled();
+        expect(mockDeleteAuths).toHaveBeenCalled();
+        expect(mockDeleteAuthsLocals).toHaveBeenCalled();
+        expect(mockCode).toHaveBeenCalledWith(204);
+    });
 });

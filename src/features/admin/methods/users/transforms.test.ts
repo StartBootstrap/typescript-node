@@ -1,4 +1,4 @@
-import { mockFindUser } from '#mocks/#features/admin/lib/users';
+import { mockFindUser } from '#mocks/#features/admin/methods/users';
 import { mockCode } from '#mocks/fastify';
 import { TestUser } from '#src/testing/objects';
 

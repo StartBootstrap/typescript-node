@@ -2,8 +2,8 @@ import httpCodes from '@inip/http-codes';
 import { FastifyPluginAsync } from 'fastify';
 
 import { RouteAuthConfig } from '#app/models';
-import { deleteAuthLocals, deleteAuths } from '#features/admin/lib/auth';
-import { deleteUsers, findUsers } from '#features/admin/lib/users';
+import { deleteAuthLocals, deleteAuths } from '#features/admin/methods/auth';
+import { deleteUsers, findUsers } from '#features/admin/methods/users';
 import { DeleteMultipleUsersPayload, RoleName } from '#public-types/admin';
 import { RouteHandlerMethodForConfig } from '#src/augmentations/fastify';
 

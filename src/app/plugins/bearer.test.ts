@@ -1,7 +1,7 @@
 import httpCodes from '@inip/http-codes';
 
 import { validateToken } from '#lib/jwt';
-import { mockFindUser } from '#mocks/#features/admin/lib/users';
+import { mockFindUser } from '#mocks/#features/admin/methods/users';
 import {
     mockAddHook,
     mockDecorate,

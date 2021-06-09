@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
 
 import { RouteAuthConfig } from '#app/models';
-import { findUser, toUserForResults } from '#features/admin/lib/users';
+import { findUser, toUserForResults } from '#features/admin/methods/users';
 import { RoleName, UserForResults } from '#public-types/admin';
 import { IDParam } from '#public-types/global';
 import { RouteHandlerMethodForConfig } from '#src/augmentations/fastify';
