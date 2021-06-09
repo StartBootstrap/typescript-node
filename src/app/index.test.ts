@@ -1,13 +1,13 @@
-// import { defaultConfig, mockConfig } from '@mocks/@lib/config';
-// import { mockDecorateRequest, mockListen, mockReady, mockRegister } from '@mocks/fastify';
-// import { mockCreateWriteStream } from '@mocks/pino-stackdriver';
+// import { defaultConfig, mockConfig } from '#mocks/#lib/config';
+// import { mockDecorateRequest, mockListen, mockReady, mockRegister } from '#mocks/fastify';
+// import { mockCreateWriteStream } from '#mocks/pino-stackdriver';
 // import { RunEnvironment } from '@src/lib/config/models';
 // import fastify from 'fastify';
 
 // import { FastifyApp } from './index';
 // import { routes } from './routes';
 
-// // We do not need to call mock below, since we are manually mocking in @mocks/fastify
+// // We do not need to call mock below, since we are manually mocking in #mocks/fastify
 // // Calling mock below will create 2 different mocks and mess up the tests
 // // jest.mock('fastify');
 

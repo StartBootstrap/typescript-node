@@ -70,7 +70,6 @@ CREATE TABLE "user" (
     "invalidLoginAttempts" INTEGER,
     "accountLocked" BOOLEAN,
     "postMetaData" JSONB,
-    "hasSocialAuth" BOOLEAN NOT NULL DEFAULT false,
     "activeMembership" VARCHAR,
     "emailConfirmationToken" VARCHAR,
     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,

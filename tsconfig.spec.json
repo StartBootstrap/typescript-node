@@ -6,7 +6,7 @@
     },
     "files": [
         "src/main.ts",
-        "jest.config.ts"
+        "jest.config.js"
     ],
     "include": [
         "src/**/*.ts",

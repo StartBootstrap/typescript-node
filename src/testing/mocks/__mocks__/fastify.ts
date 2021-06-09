@@ -1,4 +1,4 @@
-// import { RouteAuthConfig } from '@lib/orm/models';
+import { jest } from '@jest/globals';
 import {
     FastifyInstance,
     FastifyReply,
@@ -9,6 +9,8 @@ import {
     RawServerDefault,
     RequestGenericInterface,
 } from 'fastify';
+
+import { RouteAuthConfig } from '#app/models';
 
 export const mockAddHook = jest.fn((name: string, decoration: unknown) => {});
 export const mockDecorate = jest.fn((name: string, decoration: unknown) => {});
@@ -24,14 +26,14 @@ export const mockLog = {
     trace: jest.fn(() => {}),
 };
 export const mockPrintRoutes = jest.fn(() => {});
-export const mockReady = jest.fn(cb => {
+export const mockReady = jest.fn((cb: () => void) => {
     console.log('MOCK SERVER READY');
     cb();
 });
 export const mockRegister = jest.fn((plugin: unknown, options: unknown) => {});
 export const mockRoute = jest.fn((options: unknown) => {});
 
-export const mockFastifyInstance = ({
+export const mockFastifyInstance = {
     addHook: mockAddHook,
     decorate: mockDecorate,
     decorateReply: mockDecorateReply,
@@ -42,7 +44,7 @@ export const mockFastifyInstance = ({
     ready: mockReady,
     register: mockRegister,
     route: mockRoute,
-} as unknown) as FastifyInstance;
+} as unknown as FastifyInstance;
 
 export const mockFastifyInstanceParameter: FastifyInstance<
     RawServerDefault,
@@ -74,11 +76,11 @@ export const mockCode = jest.fn(() => {});
 export const mockSend = jest.fn(() => {});
 export const mockHeader = jest.fn(() => {});
 
-export const mockReply = ({
+export const mockReply = {
     code: mockCode,
     send: mockSend,
     header: mockHeader,
-} as unknown) as MockFastifyReply;
+} as unknown as MockFastifyReply;
 
 export type MockFastifyReply<
     RequestConfig = RequestGenericInterface,

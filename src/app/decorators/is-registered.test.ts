@@ -1,6 +1,6 @@
 // import httpCodes from '@inip/http-codes';
-// import { mockFastifyInstance, mockGenerateError, mockReply, requestMock } from '@mocks/fastify';
-// import { TestUser } from '@testing/objects';
+// import { mockFastifyInstance, mockGenerateError, mockReply, requestMock } from '#mocks/fastify';
+// import { TestUser } from '#testing/objects';
 
 // import { isRegistered } from './is-registered';
 

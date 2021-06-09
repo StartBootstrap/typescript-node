@@ -6,6 +6,5 @@ export const usersResponseObjectSchema = {
         lastName: { type: 'string' },
         email: { type: 'string' },
         emailConfirmed: { type: 'boolean' },
-        hasSocialAuth: { type: 'boolean' },
     },
 };

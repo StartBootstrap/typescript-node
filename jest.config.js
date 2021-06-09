@@ -16,26 +16,26 @@ export default {
             statements: -20,
         },
     },
-    extensionsToTreatAsEsm: ['.ts'],
+    // extensionsToTreatAsEsm: ['.ts'],
     globals: {
         'ts-jest': {
             tsconfig: '<rootDir>/tsconfig.spec.json',
             useESM: true,
         },
     },
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
     moduleNameMapper: {
         '^#app/(.*)$': '<rootDir>/src/app/index.ts',
         '^#features/(.*)$': '<rootDir>/src/features/$1',
         '^#lib/(.*)$': '<rootDir>/src/lib/$1',
+        '^#public-types/(.*)$': '<rootDir>/src/public-types/$1',
         '^#mocks/(.*)$': '<rootDir>/src/testing/mocks/__mocks__/$1',
         '^#src/(.*)$': '<rootDir>/src/$1',
         '^#testing/(.*)$': '<rootDir>/src/testing/$1',
     },
+    // Eventually once this is solved https://github.com/facebook/jest/issues/10025
+    // preset: 'ts-jest/presets/default-esm',
     preset: 'ts-jest',
     roots: ['<rootDir>/src', '<rootDir>/src/testing/mocks'],
     testEnvironment: 'node',
-    transform: {
-        '^.+\\.tsx?$': 'ts-jest',
-    },
+    transform: {},
 };

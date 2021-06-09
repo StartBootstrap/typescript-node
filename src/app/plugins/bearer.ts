@@ -4,8 +4,9 @@ import fastifyPlugin from 'fastify-plugin';
 
 import { findUser } from '#features/admin/lib/users';
 import { UserForAuthentication } from '#features/admin/models';
-import { AuthErrorCodes, DecodedToken } from '#features/auth/models';
+import { AuthErrorCodes } from '#features/auth/models';
 import { validateToken } from '#lib/jwt';
+import { DecodedToken } from '#public-types/auth';
 
 declare module 'fastify' {
     interface FastifyRequest {

@@ -1,25 +1,20 @@
-// import {
-//     mockFastifyInstanceParameter,
-//     mockReply,
-//     mockRoute,
-//     mockSend,
-//     requestMock,
-// } from '@mocks/fastify';
-// import fastify, { FastifyInstance } from 'fastify';
+import {
+    mockFastifyInstanceParameter,
+    mockReply,
+    mockRoute,
+    mockSend,
+    requestMock,
+} from '#mocks/fastify';
 
-// import { handler, health } from './health';
+import { handler, health } from './health';
 
-// describe('Plugin health test', () => {
-//     it('should create health route', () => {
-//         health(mockFastifyInstanceParameter, {});
-//         expect(mockRoute).toHaveBeenCalled();
-//     });
-//     it('should respond with alive', async () => {
-//         const returnValue = await handler.call(
-//             mockFastifyInstanceParameter,
-//             requestMock,
-//             mockReply
-//         );
-//         expect(mockSend).toHaveBeenCalledWith('alive');
-//     });
-// });
+describe('Plugin health test', () => {
+    it('should create health route', () => {
+        health(mockFastifyInstanceParameter, {});
+        expect(mockRoute).toHaveBeenCalled();
+    });
+    it('should respond with alive', async () => {
+        await handler.call(mockFastifyInstanceParameter, requestMock, mockReply);
+        expect(mockSend).toHaveBeenCalledWith('alive');
+    });
+});

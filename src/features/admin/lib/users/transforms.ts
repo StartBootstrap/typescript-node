@@ -9,6 +9,5 @@ export const toUserForResults = (user: User): UserForResults => {
         lastName: user.lastName,
         email: user.email,
         emailConfirmed: user.emailConfirmed,
-        hasSocialAuth: user.hasSocialAuth,
     };
 };

@@ -31,15 +31,24 @@ export type UserForToken = Prisma.UserGetPayload<{
         lastName: true;
         email: true;
         emailConfirmed: true;
-        hasSocialAuth: true;
         activeMembership: true;
         memberships: {
-            include: {
-                role: true;
-            };
+            select: {
+                id: true;
+                role: {
+                    select: {
+                        name: true;
+                    }
+                }
+            },
         };
     };
 }>;
+
+export interface DecodedToken extends UserForToken {
+    exp: number;
+    iat: number;
+}
 
 export declare type DeleteAuthErrorCodes =
     | 'ERROR_DELETING_LOCAL_AUTH'
@@ -53,3 +62,4 @@ export declare type DeleteAuthErrorCodes =
 export interface TokenResponse {
     token: string;
 }
+

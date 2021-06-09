@@ -15,7 +15,6 @@ export type UserForResults = Prisma.UserGetPayload<{
         lastName: true;
         email: true;
         emailConfirmed: true;
-        hasSocialAuth: true;
     };
 }>;
 

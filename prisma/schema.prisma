@@ -82,7 +82,6 @@ model User {
     invalidLoginAttempts   Int?
     accountLocked          Boolean?
     postMetaData           Json?
-    hasSocialAuth          Boolean      @default(false)
     activeMembership       String?      @db.VarChar
     emailConfirmationToken String?      @db.VarChar
     createdAt              DateTime     @default(now()) @db.Timestamptz(6)

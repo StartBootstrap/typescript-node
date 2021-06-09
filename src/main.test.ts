@@ -6,6 +6,6 @@ jest.mock('#app/index');
 
 test('Main should init', async () => {
     // Appears that this loads the module, calling the Main.init() so we do not need to.
-    await new Main().init();
+    await Main.init();
     expect(<jest.Mock>FastifyApp).toHaveBeenCalledTimes(1);
 });

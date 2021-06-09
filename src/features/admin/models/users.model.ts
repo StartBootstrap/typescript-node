@@ -8,8 +8,13 @@ export type UserForAuthentication = Prisma.UserGetPayload<{
             };
         };
         memberships: {
-            include: {
-                role: true;
+            select: {
+                id: true;
+                role: {
+                    select: {
+                        name: true;
+                    };
+                };
             };
         };
     };
@@ -22,8 +27,13 @@ export const userForAuthenticationInclude = {
         },
     },
     memberships: {
-        include: {
-            role: true,
+        select: {
+            id: true,
+            role: {
+                select: {
+                    name: true,
+                },
+            },
         },
     },
 };

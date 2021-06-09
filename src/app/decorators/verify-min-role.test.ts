@@ -1,9 +1,9 @@
 // import httpCodes from '@inip/http-codes';
-// import { mockConfig } from '@mocks/@lib/config';
-// import { mockIsSameID } from '@mocks/@lib/util';
-// import { mockFastifyInstance, mockGenerateError, mockReply, requestMock } from '@mocks/fastify';
+// import { mockConfig } from '#mocks/#lib/config';
+// import { mockIsSameID } from '#mocks/#lib/util';
+// import { mockFastifyInstance, mockGenerateError, mockReply, requestMock } from '#mocks/fastify';
 // import { RoleName } from '@start-bootstrap/website-shared-types';
-// import { TestUser } from '@testing/objects';
+// import { TestUser } from '#testing/objects';
 // import set from 'lodash/set';
 
 // import { verifyMinRole } from './verify-min-role';
